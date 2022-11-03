@@ -1,6 +1,8 @@
+import 'lecture_model.dart';
+
 class Student{
   String name;
-  List lectures;
+  List<Lecture> lectures;
   String course;
   String section;
   String semester;

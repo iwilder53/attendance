@@ -1,0 +1,15 @@
+{
+    "extends": "@tsconfig/recommended/tsconfig.json",
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "outDir": "dist",
+        "strictPropertyInitialization": false,
+        "emitDecoratorMetadata": true
+    },
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
