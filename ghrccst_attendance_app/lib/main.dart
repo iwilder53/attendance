@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.deepPurple,
           ),
           onGenerateRoute: generateRoute,
-          home: const LoginScreen()),
+          home: LoginScreen()),
     );
   }
 }

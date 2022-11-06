@@ -20,10 +20,10 @@ class StudentProvider extends ChangeNotifier {
       section: 'a',
       semester: '1'); */
 
-  Future<Student> login() async {
+  Future<bool> login(String roll) async {
     final loginUrl = Uri.parse('$server/api/user/login');
     try {
-      final body = json.encode({"name": "yash", "id": 22});
+      final body = json.encode({"id": roll});
       var loginState =
           await (http.post(loginUrl, headers: headers, body: body));
       print(loginState.body);
@@ -33,10 +33,10 @@ class StudentProvider extends ChangeNotifier {
         attendance.add(studentData['attendance'][i]);
       }
       setStudentData(studentData['result']);
-      return student;
+      return true;
     } on HttpException catch (e) {
       print(e);
-      return student;
+      return false;
     }
   }
 
@@ -79,7 +79,7 @@ class StudentProvider extends ChangeNotifier {
     });
 
     var result = await http.post(headers: headers, attendanceUrl, body: _body);
-    
+    print(json.decode(result.body));
   }
 
   List<DaysLectures> todaysLectures = [

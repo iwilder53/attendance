@@ -1,4 +1,3 @@
-import 'lecture_model.dart';
 
 class Student {
   String name;
@@ -6,7 +5,7 @@ class Student {
   String course;
   String section;
   String semester;
-  String roll;
+  int roll;
 
   Student(
       {required this.course,

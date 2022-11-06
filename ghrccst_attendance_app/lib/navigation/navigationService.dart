@@ -15,7 +15,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case NamedRoute.registerScreen:
       return _getPageRoute(NewStudentScreen());
     default:
-      return _getPageRoute(const LoginScreen());
+      return _getPageRoute(LoginScreen());
   }
 }
 

@@ -17,7 +17,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final studentDetails = Provider.of<StudentProvider>(context);
@@ -65,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                   onPressed: (() => {
-                /*         studentDetails.markAttendance(
+                        studentDetails.markAttendance("DEM")
+                        /*         studentDetails.markAttendance(
                             student,
                             student.lectures
                                 .first) //create a new currentLecture variable */

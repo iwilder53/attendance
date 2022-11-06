@@ -15,55 +15,62 @@ class NewStudentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextField(
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    labelText: 'Enter Name',
-                    hintText: 'Enter Your Name'),
-                controller: nameController,
-              ),
-              TextField(
-                decoration: const InputDecoration(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextField(
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Name',
+                      hintText: 'Enter your full name',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  controller: nameController,
+                ),
+                TextField(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     labelText: 'Semester',
-                    hintText: 'Enter Your semester'),
-                controller: semesterController,
-              ),
-              TextField(
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    labelText: 'Enter course',
-                    hintText: 'Enter Your course'),
-                controller: courseController,
-              ),
-              TextField(
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    labelText: 'Enter roll Number',
-                    hintText: 'Enter Your number'),
-                controller: rollController,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    final register = await Provider.of<StudentProvider>(context,
-                            listen: false)
-                        .addStudent({
-                      "userName": nameController.text,
-                      "course": courseController.text.trim(),
-                      "semester": semesterController.text,
-                      "roll": int.parse(rollController.text)
-                    });
-                    if (register) {
-                      // ignore: use_build_context_synchronously
-                      push(context, NamedRoute.loginScreen);
-                    }
-                  },
-                  child: Text('Register Now')),
-            ]),
+                  ),
+                  controller: semesterController,
+                ),
+                TextField(
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Enter course',
+                      hintText: 'Enter Your course',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  controller: courseController,
+                ),
+                TextField(
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Enter roll Number',
+                      hintText: 'Enter your id number from your ID card',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  controller: rollController,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      final register = await Provider.of<StudentProvider>(
+                              context,
+                              listen: false)
+                          .addStudent({
+                        "userName": nameController.text,
+                        "course": courseController.text.trim(),
+                        "semester": semesterController.text,
+                        "roll": int.parse(rollController.text)
+                      });
+                      if (register) {
+                        // ignore: use_build_context_synchronously
+                        push(context, NamedRoute.loginScreen);
+                      }
+                    },
+                    child: Text('Register Now')),
+              ]),
+        ),
       ),
     );
   }
