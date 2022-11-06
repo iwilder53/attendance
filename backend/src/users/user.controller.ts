@@ -1,7 +1,6 @@
 import { Attendance, AttendanceModel, UserModel } from "./user";
 import { Response, Request } from "express";
 import { CourseModel } from "../courses/course/course";
-import { SubjectModel } from "../courses/subjects/subjects";
 
 export const login = async (
     req: Request,
@@ -10,7 +9,8 @@ export const login = async (
     try {
         const { id } = req.body;
 
-        let user = await UserModel.findOne({ id: id });
+        let attendanceList = await AttendanceModel.find({ roll: id });
+        let user = await UserModel.findOne({ roll: id }).populate({ path: 'course', model: CourseModel });
         console.log(user);
         if (!user) {
             return res.status(200).send({
@@ -24,6 +24,8 @@ export const login = async (
                 message: "userfound",
                 success: true,
                 result: user,
+                attendance: attendanceList
+
                 //  accessToken: await createAccessToken(user._id)
             });
         }
@@ -39,11 +41,11 @@ export const register = async (req: Request, res: Response) => {
 
     try {
 
+        console.log(req.body);
 
         let user = await UserModel.findOne({ roll: req.body.roll });
-        console.log(req.body.user);
         const { course } = req.body
-        let courseToAdd = await CourseModel.findOne({ name: course });
+        let courseToAdd = await CourseModel.findOne({ course: course });
         req.body.course = courseToAdd?._id;
 
 

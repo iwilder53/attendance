@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
-import 'package:ghrccst_attendance_app/providers/bluetooth.dart';
 import 'package:provider/provider.dart';
-
-import 'models/student_model.dart';
 import 'providers/student_provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -27,7 +23,6 @@ class _MyHomePageState extends State<MyHomePage> {
     final studentDetails = Provider.of<StudentProvider>(context);
     final student = studentDetails.student;
 
-    final bluetoothScanner = Provider.of<BluetoothScan>(context);
     //  bluetoothScanner.startScan();
     //  ScanResult result = bluetoothScanner.getResult();
 
@@ -54,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Semester' + student.semester.toString()),
+                    child: Text('Semester : ' + student.semester.toString()),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -70,10 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                   onPressed: (() => {
-                        studentDetails.markAttendance(
+                /*         studentDetails.markAttendance(
                             student,
                             student.lectures
-                                .first) //create a new currentLecture variable
+                                .first) //create a new currentLecture variable */
                       }),
                   child: Text('Mark attendance'))
             ],

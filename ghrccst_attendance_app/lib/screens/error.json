@@ -1,0 +1,32 @@
+{
+    "success": false,
+    "message": {
+        "errors": {
+            "userName": {
+                "name": "ValidatorError",
+                "message": "Path `userName` is required.",
+                "properties": {
+                    "message": "Path `userName` is required.",
+                    "type": "required",
+                    "path": "userName"
+                },
+                "kind": "required",
+                "path": "userName"
+            },
+            "course": {
+                "name": "ValidatorError",
+                "message": "Path `course` is required.",
+                "properties": {
+                    "message": "Path `course` is required.",
+                    "type": "required",
+                    "path": "course"
+                },
+                "kind": "required",
+                "path": "course"
+            }
+        },
+        "_message": "User validation failed",
+        "name": "ValidationError",
+        "message": "User validation failed: userName: Path `userName` is required., course: Path `course` is required."
+    }
+}

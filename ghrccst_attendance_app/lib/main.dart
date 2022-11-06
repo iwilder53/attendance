@@ -3,7 +3,7 @@ import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:ghrccst_attendance_app/screens/login.dart';
 import 'package:provider/provider.dart';
 import 'main_screen.dart';
-import 'providers/bluetooth.dart';
+import 'navigation/navigationService.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<BluetoothScan>(create: (_) => BluetoothScan()),
         ChangeNotifierProvider<StudentProvider>(
             create: (_) => StudentProvider()),
       ],
@@ -36,6 +35,7 @@ class MyApp extends StatelessWidget {
             // is not restarted.
             primarySwatch: Colors.deepPurple,
           ),
+          onGenerateRoute: generateRoute,
           home: const LoginScreen()),
     );
   }

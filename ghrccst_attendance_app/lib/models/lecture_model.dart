@@ -1,7 +1,6 @@
-class Lecture {
-  Lecture(
-      {required this.attendanceMarked, required this.id, required this.name});
+class DaysLectures {
+  DaysLectures({required this.id, required this.name,required this.time});
   String id;
   String name;
-  bool attendanceMarked;
+  DateTime time;
 }

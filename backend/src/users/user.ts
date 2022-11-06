@@ -18,7 +18,7 @@ export class Attendance {
     semester: string;
 
     @prop({})
-    course:  string;
+    course: string;
 
 }
 
@@ -33,15 +33,16 @@ export class User {
     @prop({ required: true })
     userName: string;
 
-    @prop({ ref: () => Course,required: true })
+    @prop({ ref: () => Course, required: true })
     course: Ref<Course>;
     @prop()
     section: string;
-    
+    @prop()
+    semester: string;
     @prop({ ref: () => Attendance })
     attendance: Ref<Attendance>[];
 
-    @prop({})
+    @prop({ default: false })
     teacher: boolean;
 }
 export const AttendanceModel = getModelForClass(Attendance, { schemaOptions: { timestamps: true } })
