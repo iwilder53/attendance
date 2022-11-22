@@ -1,11 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ghrccst_attendance_app/main_screen.dart';
+import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
 import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:ghrccst_attendance_app/screens/login.dart';
 import 'package:provider/provider.dart';
-import 'main_screen.dart';
+import 'firebase_options.dart';
 import 'navigation/navigationService.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
@@ -20,6 +28,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<StudentProvider>(
             create: (_) => StudentProvider()),
+        ChangeNotifierProvider<LecturesProvider>(
+            create: (_) => LecturesProvider()),
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
@@ -33,7 +43,7 @@ class MyApp extends StatelessWidget {
             // or simply save your changes to "hot reload" in a Flutter IDE).
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
-            primarySwatch: Colors.deepPurple,
+            primarySwatch: Colors.orange,
           ),
           onGenerateRoute: generateRoute,
           home: LoginScreen()),

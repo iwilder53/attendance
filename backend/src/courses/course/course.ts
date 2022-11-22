@@ -18,6 +18,8 @@ export class Course {
 
     @prop({ required: true })
     semester: number;
+    @prop()
+    subjects: string[];
 
   /*        @prop({ ref: () => Subject })
         subjects: Ref<Subject>[]; */

@@ -11,6 +11,7 @@ export class Attendance {
     @prop({})
     roll: number;
 
+
     @prop({})
     subject: string;
 
@@ -37,6 +38,10 @@ export class User {
     course: Ref<Course>;
     @prop()
     section: string;
+
+    @prop({})
+    phone: number;
+
     @prop()
     semester: string;
     @prop({ ref: () => Attendance })

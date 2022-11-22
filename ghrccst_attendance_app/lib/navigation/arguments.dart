@@ -6,8 +6,12 @@ class GeneratedQRCodeScreenArguments {
 }
 
 class OtpScreenArguments {
-  final String mobNumber;
-  OtpScreenArguments({required this.mobNumber});
+  var verificationId, resendToken, auth;
+
+  OtpScreenArguments(
+      {required this.verificationId,
+      required this.resendToken,
+      required this.auth});
 }
 
 class CourseDetailScreenArguments {

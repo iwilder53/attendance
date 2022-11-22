@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/navigation/navigators.dart';
 import 'package:ghrccst_attendance_app/navigation/routes.dart';
+import 'package:ghrccst_attendance_app/widgets/alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/student_provider.dart';
@@ -10,6 +11,9 @@ class NewStudentScreen extends StatelessWidget {
   late TextEditingController rollController = TextEditingController();
   late TextEditingController courseController = TextEditingController();
   late TextEditingController semesterController = TextEditingController();
+  late TextEditingController passwordController = TextEditingController();
+  late TextEditingController confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class NewStudentScreen extends StatelessWidget {
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       labelText: 'Enter course',
-                      hintText: 'Enter Your course',
+                      hintText: 'Msc Computer Science is defualt for the beta',
                       hintStyle: TextStyle(fontSize: 14)),
                   controller: courseController,
                 ),
@@ -48,27 +52,50 @@ class NewStudentScreen extends StatelessWidget {
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       labelText: 'Enter roll Number',
-                      hintText: 'Enter your id number from your ID card',
+                      hintText: 'Enter your id from your ID card',
                       hintStyle: TextStyle(fontSize: 14)),
                   controller: rollController,
                 ),
+                TextField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Password',
+                      hintText: 'Select a password',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  controller: passwordController,
+                ),
+                TextField(
+                  obscureText: true,
+                  obscuringCharacter: '#',
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Confirm Password',
+                      hintText: 'confrim your password',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  controller: confirmPasswordController,
+                ),
                 ElevatedButton(
-                    onPressed: () async {
-                      final register = await Provider.of<StudentProvider>(
-                              context,
-                              listen: false)
-                          .addStudent({
-                        "userName": nameController.text,
-                        "course": courseController.text.trim(),
-                        "semester": semesterController.text,
-                        "roll": int.parse(rollController.text)
-                      });
-                      if (register) {
-                        // ignore: use_build_context_synchronously
-                        push(context, NamedRoute.loginScreen);
-                      }
-                    },
-                    child: Text('Register Now')),
+                    onPressed: passwordController.text.trim() ==
+                            confirmPasswordController.text.trim()
+                        ? () async {
+                            final register = await Provider.of<StudentProvider>(
+                                    context,
+                                    listen: false)
+                                .addStudent({
+                              "userName": nameController.text,
+                              "course": courseController.text.trim(),
+                              "semester": semesterController.text,
+                              "roll": int.parse(rollController.text),
+                              "password": passwordController.text
+                            });
+                            if (register) {
+                              // ignore: use_build_context_synchronously
+                              push(context, NamedRoute.loginScreen);
+                            }
+                          }
+                        : (() => alertDialog(context, 'Passwords Dont Match')),
+                    child: const Text('Register Now')),
               ]),
         ),
       ),

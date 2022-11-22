@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ghrccst_attendance_app/widgets/app_drawer.dart';
+import 'package:ghrccst_attendance_app/widgets/timetable.dart';
 import 'package:provider/provider.dart';
 import 'providers/student_provider.dart';
 
@@ -13,7 +15,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -26,56 +27,35 @@ class _MyHomePageState extends State<MyHomePage> {
     //  ScanResult result = bluetoothScanner.getResult();
 
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(student.name),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(student.course),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Semester : ' + student.semester.toString()),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text('current class :'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'result.device.name.toString()',
-                    ),
-                  ),
-                ],
-              ),
-              ElevatedButton(
-                  onPressed: (() => {
-                        studentDetails.markAttendance("DEM")
-                        /*         studentDetails.markAttendance(
-                            student,
-                            student.lectures
-                                .first) //create a new currentLecture variable */
-                      }),
-                  child: Text('Mark attendance'))
-            ],
-          ),
+        padding: const EdgeInsets.all(26.0),
+        child: Column(
+          //  physics: const NeverScrollableScrollPhysics(),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /*      Container(
+              padding: EdgeInsets.all(4.0),
+              height: 50,
+              width: 50,
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: studentDetails.todaysLectures.length),
+                  itemCount: studentDetails.todaysLectures.length,
+                  itemBuilder: (context, index) {
+                    return Text(studentDetails.todaysLectures[index].name);
+                  }),
+            ), */
+            TimeTable(
+              student: studentDetails,
+            ),
+          ],
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

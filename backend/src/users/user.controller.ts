@@ -7,10 +7,11 @@ export const login = async (
     res: Response,
 ) => {
     try {
-        const { id } = req.body;
 
-        let attendanceList = await AttendanceModel.find({ roll: id });
-        let user = await UserModel.findOne({ roll: id }).populate({ path: 'course', model: CourseModel });
+        const { phone } = req.body;
+        // let attendance = await AttendanceModel.find({ roll: id });
+        //let attendanceList = await AttendanceModel.find({ roll: id });
+        let user = await UserModel.findOne({ phone: phone }).populate({ path: 'course', model: CourseModel }).populate({ path: 'attendance', model: AttendanceModel });
         console.log(user);
         if (!user) {
             return res.status(200).send({
@@ -24,7 +25,7 @@ export const login = async (
                 message: "userfound",
                 success: true,
                 result: user,
-                attendance: attendanceList
+                //    attendance: attendanceList
 
                 //  accessToken: await createAccessToken(user._id)
             });

@@ -1,0 +1,43 @@
+{
+    "course": "Msc Computer science",
+    "semester": "1",
+    "day": "tuesday",
+    "lectures": [
+        {
+            "subject": "AD&A",
+            "day": "TUE",
+            "time": "10.00-11.00",
+            "marked": false
+        },
+        {
+            "subject": "DE&M",
+            "day": "TUE",
+            "time": "11.00-12.00",
+            "marked": false
+        },
+        {
+            "subject": "",
+            "day": "TUE",
+            "time": "12.00-12.30",
+            "marked": false
+        },
+        {
+            "subject": "JAVA",
+            "day": "TUE",
+            "time": "12.30-1.30",
+            "marked": false
+        },
+        {
+            "subject": "DMS",
+            "day": "TUE",
+            "time": "1.30-2.30",
+            "marked": false
+        },
+        {
+            "subject": "",
+            "day": "TUE",
+            "time": "2.30-3.30",
+            "marked": false
+        }
+    ]
+}

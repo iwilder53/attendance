@@ -2,16 +2,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/main_screen.dart';
+import 'package:ghrccst_attendance_app/navigation/arguments.dart';
 import 'package:ghrccst_attendance_app/screens/login.dart';
 import 'package:ghrccst_attendance_app/screens/register.dart';
+import 'package:ghrccst_attendance_app/screens/timetable_screen.dart';
+import '../screens/otp_screen.dart';
 import 'routes.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case NamedRoute.homeScreen:
       return _getPageRoute(const MyHomePage(
-        title: 'Welcome Back',
+        title: 'GHRCCST Demo',
       ));
+    case NamedRoute.otpScreen:
+      return _getPageRoute(
+        OtpScreen(args: settings.arguments as OtpScreenArguments),
+      );
+    case NamedRoute.timeTableScreen:
+      return _getPageRoute(const TimeTableScreen());
     case NamedRoute.registerScreen:
       return _getPageRoute(NewStudentScreen());
     default:
