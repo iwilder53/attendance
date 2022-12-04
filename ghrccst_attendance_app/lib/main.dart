@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/main_screen.dart';
 import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
 import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:ghrccst_attendance_app/screens/login.dart';

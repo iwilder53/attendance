@@ -16,6 +16,12 @@ export class Attendance {
     subject: string;
 
     @prop({})
+    locationLat: string;
+
+    @prop({})
+    locationLng: string;
+
+    @prop({})
     semester: string;
 
     @prop({})

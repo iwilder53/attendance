@@ -99,8 +99,13 @@ export const updateTimetable = async (req: Request, res: Response) => {
 
     try {
 
+      //  req.body = JSON.parse(req.body);
+
         console.log(req.body);
+
+
         const { course, day } = req.body
+
         let courseToAdd = await CourseModel.findOne({ course: course });
         req.body.course = courseToAdd?._id;
 

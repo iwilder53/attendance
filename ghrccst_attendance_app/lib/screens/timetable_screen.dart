@@ -30,11 +30,13 @@ class TimeTableScreen extends StatelessWidget {
             .student
             .semester
             .toString(),
-        "day": "tuesday", // timeTable[0]['day'],
+        "day": "monday", // timeTable[0]['day'],
         "lectures": timeTable
       };
       print(jsonEncode(body));
-      var response = await http.post(timetableUri, body: jsonEncode(body));
+      var response = await http.post(timetableUri,
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(body));
       print(json.decode(response.body));
     }
 
@@ -60,11 +62,11 @@ class TimeTableScreen extends StatelessWidget {
           print(daysTimetable[i][j].toJson());
         }
       }
-      List<Map<String, dynamic>> dayList = timetableList
-          .where((element) => element.containsValue('TUE'))
+      List<Map<String, dynamic>> mondayList = timetableList
+          .where((element) => element.containsValue('MON'))
           .toList();
 
-      sendTimetable(dayList);
+      sendTimetable(mondayList);
     }
 
     List timeTableData = Provider.of<LecturesProvider>(context).wholeWeek;

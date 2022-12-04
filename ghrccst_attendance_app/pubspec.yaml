@@ -43,6 +43,9 @@ dependencies:
   firebase_auth: ^4.1.2
   file_picker: ^5.2.2
   csv: ^5.0.1
+  qr_flutter: ^4.0.0
+  geolocator: ^9.0.2
+  mobile_scanner: ^2.1.0
 
 dev_dependencies:
   flutter_test:

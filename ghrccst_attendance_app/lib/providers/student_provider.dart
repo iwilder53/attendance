@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/api.dart';
 import 'package:http/http.dart' as http;
 import '../models/student_model.dart';
-import '../screens/login.dart';
+import 'get_location.dart';
 
 class StudentProvider extends ChangeNotifier {
   late Student student;
@@ -64,7 +64,6 @@ class StudentProvider extends ChangeNotifier {
     //  await auth.signInWithCredential(credential);
   }
 
-
   Future<bool> addStudent(Map<String, dynamic> newStudent) async {
     newStudent['course'] = 'Msc Computer science';
     print(newStudent);
@@ -95,17 +94,27 @@ class StudentProvider extends ChangeNotifier {
         roll: studentData['roll']);
   }
 
-  markAttendance(String subjectName) async {
-    //TODO: implement attendance method
-    final attendanceUrl = Uri.parse('$server/api/user/attend');
-    final _body = jsonEncode({
-      "roll": student.roll,
-      "subject": subjectName,
-      "semester": student.semester,
-      "course": student.semester // "Msc Computer Science"
-    });
+  markAttendance(id) async {
+    try {
+      final location = await determinePosition();
+      double longitude = location.longitude;
 
-    var result = await http.post(headers: headers, attendanceUrl, body: _body);
-    print(json.decode(result.body));
+      final attendanceUrl = Uri.parse('$server/api/user/attend');
+      final _body = jsonEncode({
+        "roll": student.roll,
+        "subject": id.split('.')[1],
+        "semester": student.semester,
+        "course": student.course, // "Msc Computer Science"
+        "location": longitude.toString(),
+        "id": id.split('.')[0]
+      });
+      print(_body);
+      var result =
+          await http.post(headers: headers, attendanceUrl, body: _body);
+      print(json.decode(result.body));
+      return result;
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 }

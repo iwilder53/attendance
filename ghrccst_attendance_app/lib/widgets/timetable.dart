@@ -18,7 +18,7 @@ class TimeTable extends StatelessWidget {
         const Divider(),
         Container(
           color: Colors.white54,
-          height: 4 * (dw * 0.3),
+          height: 4 * (dw * 0.2 + 10),
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -27,7 +27,7 @@ class TimeTable extends StatelessWidget {
                 crossAxisSpacing: 10),
             itemCount: timeTable.length,
             itemBuilder: ((context, index) => Container(
-                  padding: EdgeInsets.all(dw * 0.02),
+                  padding: EdgeInsets.all(dw * 0.06),
                   decoration: const BoxDecoration(
                       color: Colors.amberAccent,
                       borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -49,18 +49,19 @@ class TimeTable extends StatelessWidget {
                             style: const TextStyle(fontSize: 16)),
                         TextButton(
                             style: const ButtonStyle(),
-                            onPressed: timeTable[index].marked
+                            onPressed: null,
+                            /*  timeTable[index].marked
                                 ? null
                                 : (() async {
                                     await timeTableProvider
                                         .markPresentDay(index);
-                                  }),
+                                  }), */
                             child: timeTable[index].marked
                                 ? const Icon(
                                     Icons.check,
                                     color: Colors.green,
                                   )
-                                : const Icon(Icons.check)),
+                                : const Icon(null)),
                       ],
                     ),
                   ),

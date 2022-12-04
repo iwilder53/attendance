@@ -86,6 +86,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
+              keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   labelText: 'Phone Number',

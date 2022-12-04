@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/providers/student_provider.dart';
@@ -7,6 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:csv/csv.dart';
 import '../api.dart';
 import '../models/lecture_model.dart';
+import 'package:geolocator/geolocator.dart';
+
+import 'get_location.dart';
 
 class LecturesProvider extends ChangeNotifier {
   late StudentProvider student;
@@ -23,14 +27,17 @@ class LecturesProvider extends ChangeNotifier {
     var response = await http.post(timetableUri, body: body);
 
     final jsonResult = json.decode(response.body);
-
+    print(jsonResult);
     for (var i = 0; i < jsonResult.length; i++) {
       if (jsonResult["result"][i]["day"] ==
           //  getWeekDay(DateTime.now().weekday)) {
           "tuesday") {
         for (var lecture in jsonResult["result"][i]["lectures"]) {
-          presentDay
-              .add(Lecture(subject: lecture["subject"], time: lecture["time"]));
+          if (lecture["subject"] != "" &&
+              lecture["subject"].toString().toLowerCase() != "break") {
+            presentDay.add(
+                Lecture(subject: lecture["subject"], time: lecture["time"]));
+          }
         }
       }
     }
@@ -38,6 +45,7 @@ class LecturesProvider extends ChangeNotifier {
     if (presentDay.isNotEmpty) {
       presentDay.sort((a, b) => a.time.compareTo(b.time));
     }
+    print(presentDay[3].subject);
     return presentDay;
   }
 
@@ -63,7 +71,8 @@ class LecturesProvider extends ChangeNotifier {
         //bool clear = await prefs.clear();
         if (jsonData != null) {
           presentDay.removeWhere((element) =>
-              element.subject == Lecture.fromJson(json.decode(jsonData)).subject);
+              element.subject ==
+              Lecture.fromJson(json.decode(jsonData)).subject);
           presentDay.add(Lecture.fromJson(json.decode(jsonData)));
           //  presentDay = sortList(presentDay);
           if (presentDay.isNotEmpty) {
@@ -80,14 +89,46 @@ class LecturesProvider extends ChangeNotifier {
     }
   }
 
+  createAttendance(String subject) async {
+    final location = await determinePosition();
+    double longitude = location.longitude;
+    double latitude = location.latitude;
+    print(longitude);
+    print(latitude);
+    Uri timetableUri = Uri.parse('$server/api/user/generateAttendance');
+    final body = {
+      "roll": student.student.roll.toString(),
+      "subject": subject,
+      "locationLng": longitude.toString(),
+      "locationLat": latitude.toString()
+    };
+    print(body.toString());
+    var response = await http.post(timetableUri, body: body);
+
+    final jsonResult = json.decode(response.body);
+    print(jsonResult['attendance']);
+    return jsonResult['attendance'];
+  }
+
   markPresentDay(index) async {
-    await student.markAttendance(presentDay[index].subject);
+    final response = await student.markAttendance(index);
+
+    final json = jsonDecode(response.body);
+
+    index = presentDay.firstWhere((element) =>
+        element.subject == index.split('.')[1].toString().toUpperCase());
+
+    index = presentDay.indexOf(index);
+    print(index);
+    presentDay[index].id = json["_id"] ?? 'null';
     presentDay[index].marked = true;
 
-    //  print(student.student.subjects.length);
-    saveToDevice(index);
-
     notifyListeners();
+    if (json['success'] == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   List<List<Lecture>> daysTimetable = [[]];
@@ -95,7 +136,7 @@ class LecturesProvider extends ChangeNotifier {
     final input = File(timetablePath).openRead();
     final fields = await input
         .transform(utf8.decoder)
-        .transform(CsvToListConverter())
+        .transform(const CsvToListConverter())
         .toList();
     print(fields);
     for (int i = 1; i < fields.length; i++) {
@@ -103,8 +144,8 @@ class LecturesProvider extends ChangeNotifier {
     }
     for (var v = 1; v < fields.length; v++) {
       for (var i = 1; i < fields[0].length; i++) {
-        daysTimetable[v].add(
-            Lecture(subject: fields[v][i], time: fields[0][i], day: fields[v][0]));
+        daysTimetable[v].add(Lecture(
+            subject: fields[v][i], time: fields[0][i], day: fields[v][0]));
       }
     }
     var timetableList;

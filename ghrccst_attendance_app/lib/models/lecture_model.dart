@@ -3,6 +3,7 @@ class Lecture {
   String day;
   String subject;
   String time;
+  late String id;
   bool marked = false;
 
   Map<String, dynamic> toJson() =>
@@ -12,5 +13,6 @@ class Lecture {
       : subject = json['subject'],
         day = json['day'],
         time = json['time'],
-        marked = json['marked'];
+        marked = json['marked'],
+        id = json['_id'];
 }
