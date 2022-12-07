@@ -25,6 +25,7 @@ class NewStudentScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text('this page is for testing only.'),
                 TextField(
                   decoration: const InputDecoration(
                       border: InputBorder.none,

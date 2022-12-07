@@ -3,13 +3,14 @@ import { Response, Request } from "express";
 import { CourseModel } from "../courses/course/course";
 import "@typegoose/typegoose";
 import { time } from "console";
+import { createAccessToken } from "../auth.middleware";
 
 export const login = async (
     req: Request,
     res: Response,
 ) => {
     try {
-
+        
         const { phone } = req.body;
         // let attendance = await AttendanceModel.find({ roll: id });
         //let attendanceList = await AttendanceModel.find({ roll: id });
@@ -29,7 +30,7 @@ export const login = async (
                 result: user,
                 //    attendance: attendanceList
 
-                //  accessToken: await createAccessToken(user._id)
+              accessToken: await createAccessToken(user._id)
             });
         }
     } catch (error) {

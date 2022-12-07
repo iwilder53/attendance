@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+import { verifyJwtToken } from "../auth.middleware";
 import { login, register, attend, getAttendanceByUser, getAttendanceBySubject, generateAttendance } from "./user.controller";
 
 export const UserRouter: Router = express.Router();

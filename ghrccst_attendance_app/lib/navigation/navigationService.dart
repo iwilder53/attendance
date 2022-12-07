@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/main_screen.dart';
 import 'package:ghrccst_attendance_app/navigation/arguments.dart';
 import 'package:ghrccst_attendance_app/screens/login.dart';
+import 'package:ghrccst_attendance_app/screens/login_demo.dart';
 import 'package:ghrccst_attendance_app/screens/register.dart';
 import 'package:ghrccst_attendance_app/screens/timetable_screen.dart';
 import '../screens/otp_screen.dart';
@@ -19,6 +20,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         OtpScreen(args: settings.arguments as OtpScreenArguments),
       );
+
+    case NamedRoute.loginScreenDemo:
+      return _getPageRoute(const LoginScreenDemo());
     case NamedRoute.timeTableScreen:
       return _getPageRoute(const TimeTableScreen());
     case NamedRoute.registerScreen:

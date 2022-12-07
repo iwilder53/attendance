@@ -12,8 +12,8 @@ import 'get_location.dart';
 class StudentProvider extends ChangeNotifier {
   late Student student;
   FirebaseAuth auth = FirebaseAuth.instance;
-
   static List attendance = [];
+  String token = '';
   /* Student(
       name: 'yash',
       course: 'null',
@@ -32,19 +32,34 @@ class StudentProvider extends ChangeNotifier {
     final loginUrl = Uri.parse('$server/api/user/login');
     try {
       final body = json.encode({"phone": phoneNumber});
-      var loginState =
-          await (http.post(loginUrl, headers: headers, body: body));
-      print(loginState.body);
+      Map<String, String> headers;
+      if (token != null) {
+        headers = {
+          "Content-Type": "application/json; charset=utf-8",
+          "accessToken": token
+        };
+        var loginState =
+            await (http.post(loginUrl, headers: headers, body: body));
+        print(loginState.body);
 
-      final studentData = json.decode(loginState.body);
+        final studentData = json.decode(loginState.body);
 /*       if (studentData['attendance'].length != 0) {
         for (var i = 0; i < studentData['attendance'].length; i++) {
           attendance.add(studentData['attendance'][i]);
           print(studentData['attendance'][i]);
         }
       } */
-      setStudentData(studentData['result']);
-      return true;
+        if (studentData['message'] == 'userfound') {
+          setStudentData(studentData['result']);
+          token = studentData['accessToken'];
+          notifyListeners();
+          print(token);
+          return true;
+        }
+        return false;
+      } else {
+        return false;
+      }
     } on HttpException catch (e) {
       print(e);
       return false;

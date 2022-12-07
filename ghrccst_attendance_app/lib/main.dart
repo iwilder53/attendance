@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
 import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:ghrccst_attendance_app/screens/login.dart';
+import 'package:ghrccst_attendance_app/screens/login_demo.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'navigation/navigationService.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.orange,
           ),
           onGenerateRoute: generateRoute,
-          home: LoginScreen()),
+          home: const LoginScreenDemo()),
     );
   }
 }

@@ -7,7 +7,6 @@ class Student {
   String email;
   int roll;
   bool teacher = false;
-
   Student(
       {required this.course,
       required this.section,
