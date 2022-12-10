@@ -10,8 +10,14 @@ import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   late TextEditingController phoneController = TextEditingController();
@@ -19,6 +25,7 @@ class LoginScreen extends StatelessWidget {
   verificationCompleted(PhoneAuthCredential credential) async {
     print('verification complete');
   }
+
 
   @override
   Widget build(BuildContext context) {

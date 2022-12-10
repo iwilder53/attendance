@@ -27,7 +27,7 @@ class AppDrawer extends StatelessWidget {
             leading: const Icon(Icons.person),
             title: const Text('Profile'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
+              push(context, NamedRoute.profilePage);
             },
           ),
           const Divider(
@@ -65,7 +65,7 @@ class AppDrawer extends StatelessWidget {
             onTap: () {},
           ),
           SizedBox(
-            height: ds * 0.8,
+            height: ds * 0.1,
           ),
           TextButton(
               onPressed: () async {

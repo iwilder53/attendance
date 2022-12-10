@@ -52,6 +52,8 @@ class StudentProvider extends ChangeNotifier {
         if (studentData['message'] == 'userfound') {
           setStudentData(studentData['result']);
           token = studentData['accessToken'];
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('phone', phoneNumber.toString());
           notifyListeners();
           print(token);
           return true;
@@ -81,6 +83,7 @@ class StudentProvider extends ChangeNotifier {
 
   Future<bool> addStudent(Map<String, dynamic> newStudent) async {
     newStudent['course'] = 'Msc Computer science';
+    // newStudent['phone'] = 9823030630;
     print(newStudent);
     final registerUrl = Uri.parse('$server/api/user/register');
 

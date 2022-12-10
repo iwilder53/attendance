@@ -2,11 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
 import 'package:ghrccst_attendance_app/providers/student_provider.dart';
-import 'package:ghrccst_attendance_app/screens/login.dart';
-import 'package:ghrccst_attendance_app/screens/login_demo.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'navigation/navigationService.dart';
+import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.orange,
           ),
           onGenerateRoute: generateRoute,
-          home: const LoginScreenDemo()),
+          home: const SplashScreen()),
     );
   }
 }

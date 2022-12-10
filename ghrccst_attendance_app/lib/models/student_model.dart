@@ -6,7 +6,7 @@ class Student {
   List subjects = [];
   String email;
   int roll;
-  bool teacher = false;
+  bool teacher;
   Student(
       {required this.course,
       required this.section,
@@ -14,6 +14,6 @@ class Student {
       required this.subjects,
       this.email = 'null',
       required this.name,
-      this.teacher = false,
+      this.teacher = true,
       required this.roll});
 }

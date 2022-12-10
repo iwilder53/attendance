@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ghrccst_attendance_app/providers/student_provider.dart';
@@ -8,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:csv/csv.dart';
 import '../api.dart';
 import '../models/lecture_model.dart';
-import 'package:geolocator/geolocator.dart';
 
 import 'get_location.dart';
 
@@ -16,7 +14,7 @@ class LecturesProvider extends ChangeNotifier {
   late StudentProvider student;
   List<Lecture> presentDay = [];
   List<List<Lecture>> wholeWeek = [];
-
+  bool resultAwaiting = false;
   fetchAndSetLectures(StudentProvider student) async {
     this.student = student;
     Uri timetableUri = Uri.parse('$server/api/timetable/gettimetable');
@@ -37,6 +35,7 @@ class LecturesProvider extends ChangeNotifier {
               lecture["subject"].toString().toLowerCase() != "break") {
             presentDay.add(
                 Lecture(subject: lecture["subject"], time: lecture["time"]));
+            print(presentDay);
           }
         }
       }
@@ -45,7 +44,7 @@ class LecturesProvider extends ChangeNotifier {
     if (presentDay.isNotEmpty) {
       presentDay.sort((a, b) => a.time.compareTo(b.time));
     }
-    print(presentDay[3].subject);
+    //  print(presentDay[3].subject);
     return presentDay;
   }
 
@@ -90,6 +89,8 @@ class LecturesProvider extends ChangeNotifier {
   }
 
   createAttendance(String subject) async {
+    resultAwaiting = true;
+    notifyListeners();
     final location = await determinePosition();
     double longitude = location.longitude;
     double latitude = location.latitude;
@@ -107,6 +108,8 @@ class LecturesProvider extends ChangeNotifier {
 
     final jsonResult = json.decode(response.body);
     print(jsonResult['attendance']);
+    resultAwaiting = false;
+    notifyListeners();
     return jsonResult['attendance'];
   }
 
@@ -114,6 +117,8 @@ class LecturesProvider extends ChangeNotifier {
     final response = await student.markAttendance(index);
 
     final json = jsonDecode(response.body);
+
+    print(presentDay);
 
     index = presentDay.firstWhere((element) =>
         element.subject == index.split('.')[1].toString().toUpperCase());
