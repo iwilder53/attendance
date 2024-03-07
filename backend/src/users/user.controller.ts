@@ -10,7 +10,7 @@ export const login = async (
     res: Response,
 ) => {
     try {
-        
+
         const { phone } = req.body;
         // let attendance = await AttendanceModel.find({ roll: id });
         //let attendanceList = await AttendanceModel.find({ roll: id });
@@ -30,7 +30,7 @@ export const login = async (
                 result: user,
                 //    attendance: attendanceList
 
-              accessToken: await createAccessToken(user._id)
+                accessToken: await createAccessToken(user._id)
             });
         }
     } catch (error) {
@@ -41,6 +41,124 @@ export const login = async (
     }
 };
 
+export const getTeacher = async (
+    req: Request,
+    res: Response,
+) => {
+    try {
+
+        const { id } = req.body;
+
+        // let attendance = await AttendanceModel.find({ roll: id });
+        //let attendanceList = await AttendanceModel.find({ roll: id });
+        let teacher = await UserModel.findOne({ id: id, teacher: true }).populate({ path: 'attendance', model: AttendanceModel });
+        console.log(teacher);
+        if (!teacher) {
+            return res.status(200).send({
+                message: "not found",
+                success: true,
+            });
+
+        } else {
+            console.log(teacher);
+            return res.status(200).send({
+                message: "teacher",
+                success: true,
+                result: teacher,
+
+
+                //  accessToken: await createAccessToken(student._id)
+            });
+        }
+    } catch (error) {
+        return res.status(200).send({
+            success: false,
+            error: error,
+        });
+    }
+};
+
+export const getStudent = async (
+    req: Request,
+    res: Response,
+) => {
+    try {
+
+
+        const id = (req.params.id);
+        console.log(id);
+        console.log("working")
+        // let attendance = await AttendanceModel.find({ roll: id });
+        let student = await UserModel.findOne({ _id: id })//.populate({ path: 'course', model: CourseModel }).populate({ path: 'attendance', model: AttendanceModel });
+        let attendanceList = await AttendanceModel.find({ roll: student?.roll }).sort();
+        let course = await CourseModel.findOne({ _id: student?.course })
+        console.log(student);
+        if (!student) {
+            console.log(id);
+
+            return res.status(200).send({
+                message: "not found",
+                success: true,
+            });
+
+        } else {
+            console.log(student);
+            return res.status(200).send({
+                id: student.id,
+                title: `${student.firstName} ${student.lastName}`,
+                info: {
+                    username: student.userName,
+                    fullname: `${student.firstName} ${student.lastName}`,
+                    email: student.email,
+                    course: course?.course,
+                    phone: student.phone,
+
+                }
+                , chart: {
+                    dataKeys: [
+                        { name: "subject", color: "#82ca9d" },
+                        { name: "createdAt", color: "#8884d8" }],
+                    data: attendanceList
+                }
+
+
+            });
+        }
+    } catch (error) {
+        return res.status(200).send({
+            success: false,
+            error: error,
+        });
+    }
+};
+
+export const getStudents = async (
+    req: Request,
+    res: Response,
+) => {
+    try {
+        let student = await UserModel.find({ isTeacher: false }).populate({ path: 'course', model: CourseModel }).sort({ 'firstName': 1 });
+        console.log(student);
+        if (!student) {
+            return res.status(200).send({
+                message: "not found",
+                success: true,
+            });
+
+        } else {
+            console.log(student);
+            const data = student;
+            return res.status(200).send(
+                data
+            );
+        }
+    } catch (error) {
+        return res.status(200).send({
+            success: false,
+            error: error,
+        });
+    }
+};
 export const register = async (req: Request, res: Response) => {
 
     try {
@@ -267,7 +385,36 @@ export const getAttendanceBySubject = async (req: Request, res: Response) => {
 }
 
 
+export const getTeachers = async (
+    req: Request,
+    res: Response,
+) => {
+    try {
+        const teacher = await UserModel.findOne({ isTeacher: true }).populate({path:'attendace',model:AttendanceModel}).populate({ path: 'course', model: CourseModel }).sort({ 'firstName': 1 });
+        console.log(teacher);
+        if (!teacher) {
+            return res.status(200).send({
+                message: "not found",
+                success: true,
+            });
 
+        } else {
+            console.log(teacher);
+            const data = teacher;
+            return res.status(200).send(
+                data
+            );
+        }
+    } catch (error) {
+        return res.status(200).send({
+            success: false,
+            error: error,
+        });
+    }
+};
+
+
+//helper functions
 function distance(lat1: number, lon1: number, lat2: number, lon2: number, unit: string) {
     if ((lat1 == lat2) && (lon1 == lon2)) {
         return 0;
@@ -306,4 +453,8 @@ function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon
 
 function deg2rad(deg: number) {
     return deg * (Math.PI / 180)
+}
+
+function getCount(list: any[]) {
+    return list.length;
 }

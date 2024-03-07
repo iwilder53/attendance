@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:attendance_new/navigation/navigators.dart';
+import 'package:attendance_new/navigation/routes.dart';
+import 'package:attendance_new/providers/lectures_provider.dart';
+import 'package:attendance_new/providers/student_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/navigation/navigators.dart';
-import 'package:ghrccst_attendance_app/navigation/routes.dart';
-import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
-import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,7 +75,6 @@ class AppDrawer extends StatelessWidget {
                     .clear();
                 Provider.of<LecturesProvider>(context, listen: false)
                     .notifyListeners();
-                FirebaseAuth.instance.signOut();
                 // ignore: use_build_context_synchronously
                 pushReplacement(context, NamedRoute.loginScreen);
               },

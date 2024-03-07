@@ -1,6 +1,6 @@
 {
-    "name": "ghrccst_attendance_app",
-    "short_name": "ghrccst_attendance_app",
+    "name": "attendance_new",
+    "short_name": "attendance_new",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

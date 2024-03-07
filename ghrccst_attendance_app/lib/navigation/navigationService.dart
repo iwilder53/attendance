@@ -1,13 +1,13 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/screens/main_screen.dart';
-import 'package:ghrccst_attendance_app/navigation/arguments.dart';
-import 'package:ghrccst_attendance_app/screens/login.dart';
-import 'package:ghrccst_attendance_app/screens/login_demo.dart';
-import 'package:ghrccst_attendance_app/screens/profile_page.dart';
-import 'package:ghrccst_attendance_app/screens/register.dart';
-import 'package:ghrccst_attendance_app/screens/timetable_screen.dart';
+import 'package:attendance_new/screens/main_screen.dart';
+import 'package:attendance_new/navigation/arguments.dart';
+import 'package:attendance_new/screens/login.dart';
+import 'package:attendance_new/screens/login_demo.dart';
+import 'package:attendance_new/screens/profile_page.dart';
+import 'package:attendance_new/screens/register.dart';
+import 'package:attendance_new/screens/timetable_screen.dart';
 import '../screens/otp_screen.dart';
 import 'routes.dart';
 

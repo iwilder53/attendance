@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import { mongoose } from "@typegoose/typegoose";
 import { ConnectionOptions } from "tls";
+import { env } from 'process';
 
 (async () => {
   const mainRoutes = require("./routes");
@@ -20,7 +21,7 @@ import { ConnectionOptions } from "tls";
 
   mongoose
     .connect(
-      "mongodb://127.0.0.1:27017/college", {
+      env.DB_CONNECTION_STRING as string, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       } as ConnectionOptions

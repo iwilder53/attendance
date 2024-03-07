@@ -1,5 +1,5 @@
+import 'package:attendance_new/providers/student_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {

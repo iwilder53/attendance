@@ -1,6 +1,6 @@
+import 'package:attendance_new/models/lecture_model.dart';
+import 'package:attendance_new/providers/lectures_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/models/lecture_model.dart';
-import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
 import 'package:provider/provider.dart';
 
 class TimeTable extends StatelessWidget {

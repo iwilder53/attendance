@@ -1,4 +1,3 @@
-import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 
 //const server = 'http://127.0.0.1:7200';
 //const server = 'http://172.20.10.2:7200';

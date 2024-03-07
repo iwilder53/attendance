@@ -1,4 +1,4 @@
-# ghrccst_attendance_app
+# attendance_new
 
 A new Flutter project.
 

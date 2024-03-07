@@ -31,7 +31,7 @@ export class Attendance {
 
 export class User {
 
-    readonly _id: ObjectId;
+    readonly _id: string;
 
     readonly createdAt: Date;
 
@@ -39,7 +39,11 @@ export class User {
     roll: number;
     @prop({ required: true })
     userName: string;
-
+    @prop()
+    firstName: string;
+    @prop()
+    lastName: string
+   
     @prop({ ref: () => Course, required: true })
     course: Ref<Course>;
     @prop()
@@ -47,6 +51,13 @@ export class User {
 
     @prop({})
     phone: number;
+
+    @prop({})
+    year: string
+
+    @prop({})
+    email: string
+
 
     @prop()
     semester: string;

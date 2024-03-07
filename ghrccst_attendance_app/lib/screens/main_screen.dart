@@ -1,9 +1,9 @@
+import 'package:attendance_new/providers/lectures_provider.dart';
+import 'package:attendance_new/widgets/app_drawer.dart';
+import 'package:attendance_new/widgets/qr_dialog.dart';
+import 'package:attendance_new/widgets/scanner.dart';
+import 'package:attendance_new/widgets/timetable.dart';
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
-import 'package:ghrccst_attendance_app/widgets/app_drawer.dart';
-import 'package:ghrccst_attendance_app/widgets/qr_dialog.dart';
-import 'package:ghrccst_attendance_app/widgets/scanner.dart';
-import 'package:ghrccst_attendance_app/widgets/timetable.dart';
 import 'package:provider/provider.dart';
 import '../providers/student_provider.dart';
 

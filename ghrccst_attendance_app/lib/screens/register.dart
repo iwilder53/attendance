@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/navigation/navigators.dart';
-import 'package:ghrccst_attendance_app/navigation/routes.dart';
-import 'package:ghrccst_attendance_app/widgets/alert_dialog.dart';
+import 'package:attendance_new/navigation/navigators.dart';
+import 'package:attendance_new/navigation/routes.dart';
+import 'package:attendance_new/widgets/alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/student_provider.dart';

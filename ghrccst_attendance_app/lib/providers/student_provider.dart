@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:attendance_new/api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:ghrccst_attendance_app/api.dart';
 import 'package:http/http.dart' as http;
 import '../models/student_model.dart';
 import 'get_location.dart';
 
 class StudentProvider extends ChangeNotifier {
   late Student student;
-  FirebaseAuth auth = FirebaseAuth.instance;
+
   static List attendance = [];
   String token = '';
   /* Student(
@@ -69,17 +68,6 @@ class StudentProvider extends ChangeNotifier {
     //  }
   }
 
-  codeSent(verificationId, resendToken) async {
-    // Update the UI - wait for the user to enter the SMS code
-    String smsCode = '111111';
-
-    // Create a PhoneAuthCredential with the code
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: smsCode);
-
-    // Sign the user in (or link) with the credential
-    //  await auth.signInWithCredential(credential);
-  }
 
   Future<bool> addStudent(Map<String, dynamic> newStudent) async {
     newStudent['course'] = 'Msc Computer science';

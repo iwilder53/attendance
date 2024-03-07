@@ -1,4 +1,4 @@
-package com.example.ghrccst_attendance_app
+package com.example.attendance_new
 
 import io.flutter.embedding.android.FlutterActivity
 

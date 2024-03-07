@@ -1,7 +1,6 @@
+import 'package:attendance_new/providers/student_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:ghrccst_attendance_app/navigation/navigators.dart';
-import 'package:ghrccst_attendance_app/providers/student_provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +23,7 @@ Future<dynamic> scanQR(
                 child: SizedBox(
                     height: dw,
                     width: dw,
-                    child: MobileScanner(
-                        allowDuplicates: false,
+                   /*  child: MobileScanner(
                         onDetect: (barcode, args) async {
                           if (barcode.rawValue == null) {
                             debugPrint('Failed to scan Barcode');
@@ -39,7 +37,7 @@ Future<dynamic> scanQR(
                             }
                             pop(context);
                           }
-                        })),
+                        }) */),
               )))
       : showDialog(
           context: context,

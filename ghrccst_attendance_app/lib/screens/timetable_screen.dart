@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:ghrccst_attendance_app/providers/student_provider.dart';
+import 'package:attendance_new/providers/student_provider.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:ghrccst_attendance_app/api.dart';
-import 'package:ghrccst_attendance_app/providers/lectures_provider.dart';
+import 'package:attendance_new/api.dart';
+import 'package:attendance_new/providers/lectures_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../models/lecture_model.dart';
