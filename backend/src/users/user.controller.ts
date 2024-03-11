@@ -4,6 +4,7 @@ import { CourseModel } from "../courses/course/course";
 import "@typegoose/typegoose";
 import { time } from "console";
 import { createAccessToken } from "../auth.middleware";
+import { Encrypt } from "../crypto";
 
 export const login = async (
     req: Request,
@@ -11,26 +12,36 @@ export const login = async (
 ) => {
     try {
 
-        const { phone } = req.body;
-        // let attendance = await AttendanceModel.find({ roll: id });
-        //let attendanceList = await AttendanceModel.find({ roll: id });
-        let user = await UserModel.findOne({ phone: phone }).populate({ path: 'course', model: CourseModel }).populate({ path: 'attendance', model: AttendanceModel });
+        const { email, pass } = req.body;
+
+        //  let attendance = await AttendanceModel.find({ roll: id });
+        // let attendanceList = await AttendanceModel.find({ roll: id });
+        let user = await UserModel.findOne({ email: email }).populate({ path: 'course', model: CourseModel }).populate({ path: 'attendance', model: AttendanceModel });
         console.log(user);
         if (!user) {
             return res.status(200).send({
-                message: "New User",
+                message: "New User, Please register first",
                 success: true,
             });
 
         } else {
             console.log(user);
+            const passValid = await Encrypt.comparePassword(pass, user.password);
+            if (!passValid) {
+                return res.status(200).send({
+                    message: "Invalid Password",
+                    success: true,
+                });
+            }
+
+            user.token = await createAccessToken(user._id)
             return res.status(200).send({
                 message: "userfound",
                 success: true,
                 result: user,
-                //    attendance: attendanceList
+                // attendance: attendanceList,
 
-                accessToken: await createAccessToken(user._id)
+                //  accessToken: await createAccessToken(user._id)
             });
         }
     } catch (error) {
@@ -165,21 +176,23 @@ export const register = async (req: Request, res: Response) => {
 
         console.log(req.body);
 
-        let user = await UserModel.findOne({ roll: req.body.roll });
-        const { course } = req.body
-        let courseToAdd = await CourseModel.findOne({ course: course });
-        req.body.course = courseToAdd?._id;
+        const { course, email, semester } = req.body
+        let user = await UserModel.findOne({ email: req.body.email });
+        req.body.password = await Encrypt.cryptPassword(req.body.password);
+
 
 
         if (!user) {
+            let courseToAdd = await CourseModel.findOne({ course: course, semester: semester });
+            req.body.course = courseToAdd?._id;
             user = await UserModel.create({ ...req.body });
             if (user) {
-
+                user = await user.populate({ path: 'course', model: CourseModel });
                 return res.status(200).send({
                     message: 'User created successfully',
                     success: true,
                     result: user,
-                    //    accessToken: await createAccessToken(user._id)
+                    accessToken: await createAccessToken(user._id)
 
                 }
                 );
@@ -196,7 +209,7 @@ export const register = async (req: Request, res: Response) => {
                 message: 'User already exists',
                 success: false,
                 result: user,
-                //    accessToken: await createAccessToken(user._id)
+                accessToken: await createAccessToken(user._id)
             });
         }
     }
@@ -384,13 +397,67 @@ export const getAttendanceBySubject = async (req: Request, res: Response) => {
 
 }
 
+export const addStudent = async (req: Request, res: Response) => {
+
+    try {
+
+        console.log(req.body);
+
+        const { course, email } = req.body
+        let user = await UserModel.findOne({ email: req.body.email });
+        let courseToAdd = await CourseModel.findOne({ course: course });
+        req.body.course = courseToAdd?._id;
+
+        req.body.password = await Encrypt.cryptPassword(req.body.password);
+
+
+
+
+        if (!user) {
+            user = await UserModel.create({ ...req.body });
+            if (user) {
+
+                return res.status(200).send({
+                    message: 'User created successfully',
+                    success: true,
+                    result: user,
+                    accessToken: await createAccessToken(user._id)
+
+                }
+                );
+            } else {
+                return res.status(400).send({
+                    message: 'User not created',
+                    success: false,
+
+                });
+            }
+        }
+        else {
+            return res.status(400).send({
+                message: 'User already exists',
+                success: false,
+                result: user,
+                accessToken: await createAccessToken(user._id)
+            });
+        }
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).send({
+            success: false,
+            message: err,
+        });
+    }
+};
+
 
 export const getTeachers = async (
     req: Request,
     res: Response,
 ) => {
     try {
-        const teacher = await UserModel.findOne({ isTeacher: true }).populate({path:'attendace',model:AttendanceModel}).populate({ path: 'course', model: CourseModel }).sort({ 'firstName': 1 });
+        const teacher = await UserModel.findOne({ isTeacher: true }).populate({ path: 'attendace', model: AttendanceModel }).populate({ path: 'course', model: CourseModel }).sort({ 'firstName': 1 });
         console.log(teacher);
         if (!teacher) {
             return res.status(200).send({

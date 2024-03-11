@@ -39,11 +39,14 @@ export class User {
     roll: number;
     @prop({ required: true })
     userName: string;
-    @prop()
+    @prop({ required: true })
     firstName: string;
-    @prop()
+    @prop({ required: true })
     lastName: string
-   
+
+    @prop({ required: true })
+    password: string
+
     @prop({ ref: () => Course, required: true })
     course: Ref<Course>;
     @prop()
@@ -56,11 +59,14 @@ export class User {
     year: string
 
     @prop({})
+    token: string
+
+    @prop({ required: true })
     email: string
 
 
     @prop()
-    semester: string;
+    semester: number;
     @prop({ ref: () => Attendance })
     attendance: Ref<Attendance>[];
 

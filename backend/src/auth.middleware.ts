@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { sign, verify } from "jsonwebtoken";
 import { UserModel } from "./users/user";
+import { env } from 'process';
 
 export const createAccessToken = async (userId: any): Promise<string> => {
 
@@ -17,10 +18,11 @@ export const verifyJwtToken = async (
 ) => {
   try {
     const authorization: string = req.headers.authorization || "";
+    console.log(authorization)
 
     if (authorization) {
       const token = authorization.split(" ")[1];
-      const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
+      const payload: any = verify(token, env.ACCESS_TOKEN_SECRET as string);
 
 
       const user = await UserModel.findOne(payload.user);
@@ -29,7 +31,7 @@ export const verifyJwtToken = async (
         return next();
       } else {
 
-        res.status(200).json({ message: "You are not authenticated." });
+        return res.status(200).json({ message: "You are not authenticated." });
         return null;
       }
 
@@ -38,6 +40,6 @@ export const verifyJwtToken = async (
   }
   catch (err) {
 
-    res.status(400).json({ message: "You are not authenticated." });
+    return res.status(400).json({ message: "You are not authenticated." });
   }
 }
