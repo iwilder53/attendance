@@ -95,7 +95,7 @@ class _LoginScreenDemoState extends State<LoginScreenDemo> {
                         child: SizedBox(
                           height: dw * 0.1,
                           width: dw * 0.1,
-                          child: CircularProgressIndicator(),
+                          child: const CircularProgressIndicator(),
                         ),
                       ),
                     )

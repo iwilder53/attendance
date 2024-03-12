@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:attendance_new/providers/student_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:csv/csv.dart';
@@ -33,18 +34,22 @@ class TimeTableScreen extends StatelessWidget {
         "day": "monday", // timeTable[0]['day'],
         "lectures": timeTable
       };
-      print(jsonEncode(body));
+      if (kDebugMode) {
+        print(jsonEncode(body));
+      }
       var response = await http.post(timetableUri,
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(body));
-      print(json.decode(response.body));
+      if (kDebugMode) {
+        print(json.decode(response.body));
+      }
     }
 
     uploadTimetable(String timetablePath) async {
       final input = File(timetablePath).openRead();
       final fields = await input
           .transform(utf8.decoder)
-          .transform(CsvToListConverter())
+          .transform(const CsvToListConverter())
           .toList();
       for (int i = 1; i < fields.length; i++) {
         daysTimetable.add([]);
@@ -59,7 +64,9 @@ class TimeTableScreen extends StatelessWidget {
       for (var i = 0; i < daysTimetable.length; i++) {
         for (var j = 0; j < daysTimetable[i].length; j++) {
           timetableList.add(daysTimetable[i][j].toJson());
-          print(daysTimetable[i][j].toJson());
+          if (kDebugMode) {
+            print(daysTimetable[i][j].toJson());
+          }
         }
       }
       List<Map<String, dynamic>> mondayList = timetableList
@@ -77,10 +84,14 @@ class TimeTableScreen extends StatelessWidget {
                 result =
                     await FilePicker.platform.pickFiles(allowMultiple: true);
                 if (result == null) {
-                  print("No file selected");
+                  if (kDebugMode) {
+                    print("No file selected");
+                  }
                 } else {
                   result?.files.forEach((element) {
-                    print(element.name);
+                    if (kDebugMode) {
+                      print(element.name);
+                    }
                     uploadTimetable(element.path!);
                   });
                 }

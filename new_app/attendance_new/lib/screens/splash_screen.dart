@@ -1,4 +1,5 @@
-import 'dart:convert';
+// ignore_for_file: use_build_context_synchronously
+
 
 import 'package:flutter/material.dart';
 import 'package:attendance_new/providers/student_provider.dart';
@@ -20,16 +21,28 @@ class _SplashScreenState extends State<SplashScreen> {
   late String mail;
   late String pass;
 
-  void loginFromSavedData(String mail, String pass) async {
-    final studentProvider =
-        Provider.of<StudentProvider>(context, listen: false);
-    bool loginState = await studentProvider.login(mail, pass);
-    if (loginState == true) {
-      await Provider.of<LecturesProvider>(context, listen: false)
-          // ignore: use_build_context_synchronously
-          .fetchAndSetLectures(
-              Provider.of<StudentProvider>(context, listen: false));
-      pushReplacement(context, NamedRoute.homeScreen);
+  loginFromSavedData(String mail, String pass) async {
+    try {
+      final studentProvider =
+          Provider.of<StudentProvider>(context, listen: false);
+      bool loginState = await studentProvider.login(mail, pass);
+      if (loginState == true) {
+        await Provider.of<LecturesProvider>(context, listen: false)
+            // ignore: use_build_context_synchronously
+            .fetchAndSetLectures(
+                Provider.of<StudentProvider>(context, listen: false));
+        pushReplacement(context, NamedRoute.homeScreen);
+      }
+    } on Exception catch (e) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext ctx) {
+            return Center(
+                child: Text(
+              e.toString(),
+              style: TextStyle(fontSize: 14, color: Colors.black),
+            ));
+          });
     }
   }
 

@@ -15,12 +15,10 @@ Future<dynamic> qrDialog(BuildContext context, String message, dw) {
                   data: message,
                   version: QrVersions.auto,
                   errorStateBuilder: (cxt, err) {
-                    return Container(
-                      child: Center(
-                        child: Text(
-                          'Uh oh! Something went wrong...',
-                          textAlign: TextAlign.center,
-                        ),
+                    return const Center(
+                      child: Text(
+                        'Uh oh! Something went wrong...',
+                        textAlign: TextAlign.center,
                       ),
                     );
                   }),

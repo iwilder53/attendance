@@ -23,7 +23,7 @@ class ProfilePage extends StatelessWidget {
               Text(studentProvider.student.roll.toString()),
               Text(studentProvider.student.course),
               Text(studentProvider.student.semester.toString()),
-              Text('Page under work ')
+              const Text('Page under work ')
             ],
           ),
         ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:attendance_new/providers/student_provider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:csv/csv.dart';
@@ -27,7 +27,9 @@ class LecturesProvider extends ChangeNotifier {
     var response = await http.post(timetableUri, body: body);
 
     final jsonResult = json.decode(response.body);
-    print(jsonResult);
+    if (kDebugMode) {
+      print(jsonResult);
+    }
 
     for (var i = 0; i < jsonResult.length; i++) {
       if (jsonResult["result"][i]["day"] ==
@@ -38,7 +40,9 @@ class LecturesProvider extends ChangeNotifier {
               lecture["subject"].toString().toLowerCase() != "break") {
             presentDay.add(
                 Lecture(subject: lecture["subject"], time: lecture["time"]));
-            print(presentDay);
+            if (kDebugMode) {
+              print(presentDay);
+            }
           }
         }
       }
@@ -56,17 +60,23 @@ class LecturesProvider extends ChangeNotifier {
 
     final savedData = await prefs.setString(
         'presentDay$index', json.encode(presentDay[index].toJson()));
-    print(savedData);
+    if (kDebugMode) {
+      print(savedData);
+    }
   }
 
   getPresentDay() async {
     final prefs = await SharedPreferences.getInstance();
     final index = student.student.subjects.length;
 
-    print('i:$index');
+    if (kDebugMode) {
+      print('i:$index');
+    }
 
     for (num i = 0; i < index; i++) {
-      print(prefs.getString('presentDay$i'));
+      if (kDebugMode) {
+        print(prefs.getString('presentDay$i'));
+      }
       try {
         final jsonData = prefs.getString('presentDay$i');
 
@@ -85,7 +95,9 @@ class LecturesProvider extends ChangeNotifier {
 
         //  prefs.remove('presentDay$i');
       } catch (e) {
-        print(e);
+        if (kDebugMode) {
+          print(e);
+        }
         break;
       }
     }
@@ -97,8 +109,7 @@ class LecturesProvider extends ChangeNotifier {
     final location = await determinePosition();
     double longitude = location.longitude;
     double latitude = location.latitude;
-    print(longitude);
-    print(latitude);
+
     Uri timetableUri = Uri.parse('$server/api/user/generateAttendance');
     final body = {
       "roll": student.student.roll.toString(),
@@ -106,13 +117,17 @@ class LecturesProvider extends ChangeNotifier {
       "locationLng": longitude.toString(),
       "locationLat": latitude.toString()
     };
-    print(body.toString());
+    if (kDebugMode) {
+      print(body.toString());
+    }
     var response =
         await http.post(timetableUri, body: jsonEncode
         (body), headers: headers);
 
     final jsonResult = json.decode(response.body);
-    print(jsonResult['attendance']);
+    if (kDebugMode) {
+      print(jsonResult['attendance']);
+    }
     resultAwaiting = false;
     notifyListeners();
     return jsonResult['attendance'];
@@ -123,13 +138,17 @@ class LecturesProvider extends ChangeNotifier {
 
     final json = jsonDecode(response.body);
 
-    print(presentDay);
+    if (kDebugMode) {
+      print(presentDay);
+    }
 
     index = presentDay.firstWhere((element) =>
         element.subject == index.split('.')[1].toString().toUpperCase());
 
     index = presentDay.indexOf(index);
-    print(index);
+    if (kDebugMode) {
+      print(index);
+    }
     presentDay[index].id = json["_id"] ?? 'null';
     presentDay[index].marked = true;
 
@@ -147,7 +166,9 @@ class LecturesProvider extends ChangeNotifier {
     var response = await http.get(getCoursesUri);
 
     final jsonResult = json.decode(response.body);
-    print(jsonResult['result']);
+    if (kDebugMode) {
+      print(jsonResult['result']);
+    }
     return courses = jsonResult['result'];
   }
 
@@ -158,7 +179,9 @@ class LecturesProvider extends ChangeNotifier {
         .transform(utf8.decoder)
         .transform(const CsvToListConverter())
         .toList();
-    print(fields);
+    if (kDebugMode) {
+      print(fields);
+    }
     for (int i = 1; i < fields.length; i++) {
       daysTimetable.add([]);
     }
@@ -172,7 +195,9 @@ class LecturesProvider extends ChangeNotifier {
     for (var i = 0; i < daysTimetable.length; i++) {
       for (var j = 0; j < daysTimetable[i].length; j++) {
         timetableList = daysTimetable[i][j].toJson();
-        print(timetableList.toString());
+        if (kDebugMode) {
+          print(timetableList.toString());
+        }
       }
     }
   }

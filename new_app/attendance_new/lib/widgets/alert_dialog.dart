@@ -4,7 +4,7 @@ Future<dynamic> alertDialog(BuildContext context, String message) {
   double width = MediaQuery.of(context).size.width;
   return showDialog(
       context: context,
-      builder: ((context) => Container(
+      builder: ((context) => SizedBox(
             height: width * 0.2,
             child: AlertDialog(
               icon: Icon(Icons.error_outline),

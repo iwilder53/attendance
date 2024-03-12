@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           title: 'GHR CCST Attendance Management',
           theme: ThemeData(
-            useMaterial3: true,
-            primarySwatch: Colors.orange,
-            
-          ),
+              primaryColor: Colors.amber,
+              useMaterial3: true,
+              primarySwatch: Colors.amber,
+              textTheme: Typography.whiteMountainView),
           onGenerateRoute: generateRoute,
           home: const SplashScreen()),
     );

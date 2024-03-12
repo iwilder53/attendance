@@ -2,6 +2,7 @@
 
 import 'package:attendance_new/navigation/navigators.dart';
 import 'package:attendance_new/providers/student_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -13,14 +14,11 @@ Future<dynamic> scanQR(
     BuildContext context, String message, dw, StudentProvider student) async {
   final timeTableProvider =
       Provider.of<LecturesProvider>(context, listen: false);
-  bool serviceEnabled = false;
 
-  checkServiceEnabled() async {
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  }
+
 
   return await Geolocator.isLocationServiceEnabled()
-      // ignore: use_build_context_synchronously
+      
       ? showDialog(
           context: context,
           builder: ((context) => Dialog(
@@ -42,7 +40,9 @@ Future<dynamic> scanQR(
                             try {
                               await timeTableProvider.markPresentDay(code);
                             } catch (e) {
-                              print(e);
+                              if (kDebugMode) {
+                                print(e);
+                              }
                             }
                             pop(context);
                           }

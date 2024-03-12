@@ -2,11 +2,12 @@
 
 import 'package:attendance_new/navigation/navigators.dart';
 import 'package:attendance_new/navigation/routes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -46,7 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  print('TODO: Implement');
+                  if (kDebugMode) {
+                    print('TODO: Implement');
+                  }
                 },
                 child: const Text('Log In')),
             TextButton(

@@ -46,7 +46,9 @@ class StudentProvider extends ChangeNotifier {
           prefs.setString('authMail', email);
           prefs.setString('authPass', password);
           notifyListeners();
-          print(token);
+          if (kDebugMode) {
+            print(token);
+          }
           return true;
         }
         return false;
