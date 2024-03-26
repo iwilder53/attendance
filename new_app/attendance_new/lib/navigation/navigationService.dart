@@ -25,13 +25,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case NamedRoute.profilePage:
       return _getPageRoute(const ProfilePage());
     case NamedRoute.loginScreen:
-      return _getPageRoute(LoginScreenDemo());
+      return _getPageRoute(const LoginScreenDemo());
     case NamedRoute.timeTableScreen:
       return _getPageRoute(const TimeTableScreen());
     case NamedRoute.registerScreen:
       return _getPageRoute(NewStudentScreen());
     default:
-      return _getPageRoute(LoginScreen());
+      return _getPageRoute(const LoginScreen());
   }
 }
 

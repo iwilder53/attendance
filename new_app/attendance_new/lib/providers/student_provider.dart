@@ -46,7 +46,9 @@ class StudentProvider extends ChangeNotifier {
           prefs.setString('authMail', email);
           prefs.setString('authPass', password);
           notifyListeners();
-          print(token);
+          if (kDebugMode) {
+            print(token);
+          }
           return true;
         }
         return false;
@@ -105,6 +107,7 @@ class StudentProvider extends ChangeNotifier {
       final attendanceUrl = Uri.parse('$server/api/user/attend');
       final _body = jsonEncode({
         "roll": student.roll,
+        "email": student.email,
         "subject": id.split('.')[1],
         "semester": student.semester,
         "course": student.course, // "Msc Computer Science"

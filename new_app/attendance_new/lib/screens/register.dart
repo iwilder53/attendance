@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:attendance_new/navigation/navigators.dart';
 import 'package:attendance_new/navigation/routes.dart';
@@ -25,7 +26,9 @@ class NewStudentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     mailValidator(text) {
       if (!(text.contains('@')) && text.isNotEmpty) {
-        print(text);
+        if (kDebugMode) {
+          print(text);
+        }
         return "Enter a valid email address!";
       }
       return null;
@@ -68,7 +71,7 @@ class NewStudentScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('this page is for testing only.'),
+                  const Text('this page is for testing only.'),
                   Row(
                     children: [
                       SizedBox(

@@ -7,7 +7,3 @@ sortList(List<Lecture> object) {
     return aProp.compareTo(bProp);
   });
 }
-sortTimetable(List<List<Lecture>> allLectures){
-  List lectures = [];
- 
-}

@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:attendance_new/providers/lectures_provider.dart';
 import 'package:attendance_new/widgets/app_drawer.dart';
 import 'package:attendance_new/widgets/qr_dialog.dart';
 import 'package:attendance_new/widgets/scanner.dart';
 import 'package:attendance_new/widgets/timetable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/student_provider.dart';
@@ -42,10 +45,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 .createAttendance(student.subjects[idx]);
         // ignore: prefer_interpolation_to_compose_strings
         message = '$currentSubjectCode.' + student.subjects[idx];
-        print(message);
+        if (kDebugMode) {
+          print(message);
+        }
         loaderSwitch();
       } on Exception catch (e) {
-        print(e);
+        if (kDebugMode) {
+          print(e);
+        }
         loaderSwitch();
       }
     }
@@ -54,8 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
     //  ScanResult result = bluetoothScanner.getResult();
     double dw = MediaQuery.of(context).size.width;
     return Scaffold(
+        //backgroundColor: const Color.fromARGB(66, 100, 100, 100),
         drawer: AppDrawer(),
         appBar: AppBar(
+          //  backgroundColor: Colors.amber.shade700,
           title: Text(widget.title),
         ),
         body: Padding(
@@ -74,26 +83,30 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: SizedBox(
                                   height: dw * 0.1,
                                   width: dw * 0.1,
-                                  child: CircularProgressIndicator(),
+                                  child: const CircularProgressIndicator(),
                                 ),
                               ),
                             )
-                          : Container(
+                          : SizedBox(
                               height: student.subjects.length * (dw * 0.15),
                               child: ListView.builder(
                                   itemCount: student.subjects.length,
                                   itemBuilder: (ctx, idx) => ListTile(
-                                        leading: const Icon(Icons.checklist),
-                                        title: Text(student.subjects[idx]),
+                                        leading: Icon(Icons.checklist,
+                                            color: Colors.amber.shade100),
+                                        title: Text(
+                                          '${student.subjects[idx]}}',
+                                          style: TextStyle(),
+                                        ),
                                         trailing: IconButton(
+                                          color: Colors.amber,
                                           icon: const Icon(Icons
                                               .arrow_circle_right_outlined),
                                           onPressed: () async => {
                                             await create(idx),
                                             await qrDialog(
                                                 context,
-                                                '$currentSubjectCode.' +
-                                                    student.subjects[idx],
+                                                '$currentSubjectCode.${student.subjects[idx]}',
                                                 dw)
                                           },
                                         ),
