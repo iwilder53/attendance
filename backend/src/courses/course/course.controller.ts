@@ -92,6 +92,40 @@ export const deleteCourse = async (req: Request, res: Response) => {
 };
 
 
+export const updateCourse = async (req: Request, res: Response) => {
+
+    try {
+        const course = await CourseModel.findOneAndUpdate({ _id: req.body.id }, { ...req.body }, { new: true });
+
+        if (course) {
+
+
+            return res.status(200).send({
+                message: 'courses fetched successfully',
+                success: true,
+                result: course,
+
+            }
+            );
+        } else {
+            return res.status(400).send({
+                message: 'course not found, Cannot be updated',
+                success: false,
+
+            });
+        }
+    }
+
+    catch (err) {
+        console.log(err);
+        return res.status(400).send({
+            success: false,
+            message: err,
+        });
+    }
+};
+
+
 export const getCourses = async (req: Request, res: Response) => {
 
     try {

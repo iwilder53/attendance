@@ -14,6 +14,8 @@ export class Attendance {
 
     @prop({})
     subject: string;
+    @prop()
+    class: ObjectId;
 
     @prop({})
     locationLat: string;
@@ -69,6 +71,9 @@ export class User {
     semester: number;
     @prop({ ref: () => Attendance })
     attendance: Ref<Attendance>[];
+
+    @prop({})
+    entries: number;
 
     @prop({ default: false })
     teacher: boolean;

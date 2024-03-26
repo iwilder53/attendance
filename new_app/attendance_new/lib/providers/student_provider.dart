@@ -107,6 +107,7 @@ class StudentProvider extends ChangeNotifier {
       final attendanceUrl = Uri.parse('$server/api/user/attend');
       final _body = jsonEncode({
         "roll": student.roll,
+        "email": student.email,
         "subject": id.split('.')[1],
         "semester": student.semester,
         "course": student.course, // "Msc Computer Science"

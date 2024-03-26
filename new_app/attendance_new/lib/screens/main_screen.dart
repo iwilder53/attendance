@@ -61,10 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
     //  ScanResult result = bluetoothScanner.getResult();
     double dw = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: const Color.fromARGB(66, 100, 100, 100),
+        //backgroundColor: const Color.fromARGB(66, 100, 100, 100),
         drawer: AppDrawer(),
         appBar: AppBar(
-          backgroundColor: Colors.amber.shade700,
+          //  backgroundColor: Colors.amber.shade700,
           title: Text(widget.title),
         ),
         body: Padding(
@@ -95,9 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                         leading: Icon(Icons.checklist,
                                             color: Colors.amber.shade100),
                                         title: Text(
-                                          student.subjects[idx],
-                                          style: TextStyle(
-                                              color: Colors.amber.shade100),
+                                          '${student.subjects[idx]}}',
+                                          style: TextStyle(),
                                         ),
                                         trailing: IconButton(
                                           color: Colors.amber,

@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:flutter/material.dart';
 import 'package:attendance_new/providers/student_provider.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset("images/logo.png"),
+          Image.asset("assets/images/logo.png"),
           const Text('GHRCCST Attendance App'),
         ],
       )),

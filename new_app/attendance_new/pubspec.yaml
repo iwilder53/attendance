@@ -44,6 +44,8 @@ dependencies:
   geolocator: ^11.0.0
   transparent_image: ^2.0.0
   mobile_scanner: ^4.0.1
+  json_theme: ^4.0.0
+
   
 dev_dependencies:
   flutter_test:
@@ -69,7 +71,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-      - images/logo.png
+      - assets/images/logo.png
+      - assets/themes/light.json
+      - assets/themes/dark.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
